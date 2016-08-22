@@ -12,38 +12,6 @@ import util.Vec2;
 
 public abstract class Graphics2D {
 
-    public static void drawCut(ArrayList<Vec2> path) {
-        if (path.size() < 3) {
-            return;
-        }
-        //Smoothe list
-        ArrayList<Vec2> newL = new ArrayList();
-        newL.add(path.get(0));
-        for (int i = 1; i < path.size() - 1; i++) {
-            newL.add(path.get(i - 1).add(path.get(i)).add(path.get(i + 1)).multiply(1. / 3));
-        }
-        newL.add(path.get(path.size() - 1));
-        path = newL;
-        //Draw
-        glDisable(GL_TEXTURE_2D);
-        Color4.WHITE.glColor();
-        glBegin(GL_TRIANGLE_STRIP);
-        {
-            Vec2 p1 = path.get(0).add(path.get(0).subtract(path.get(1)).withLength(30));
-            glVertex2d(p1.x, p1.y);
-            for (int i = 1; i < path.size() - 1; i++) {
-                Vec2 a = path.get(i - 1);
-                Vec2 b = path.get(i);
-                Vec2 c = b.add(b.subtract(a).normal().withLength(20 * (path.size() - i) / path.size()));
-                Vec2 d = b.add(b.subtract(a).normal().withLength(-20 * (path.size() - i) / path.size()));
-                c.glVertex();
-                d.glVertex();
-            }
-            path.get(path.size() - 1).glVertex();
-        }
-        glEnd();
-    }
-
     public static void drawEllipse(Vec2 pos, Vec2 size, Color4 color, double detail) {
         glDisable(GL_TEXTURE_2D);
         color.glColor();
@@ -72,6 +40,11 @@ public abstract class Graphics2D {
         glEnd();
     }
 
+    public static void drawRectStart(){
+        
+        
+    }
+    
     public static void drawRect(Vec2 pos, Vec2 size, Color4 color) {
         glPushMatrix();
         glDisable(GL_TEXTURE_2D);

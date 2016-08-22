@@ -3,6 +3,8 @@ package engine;
 import graphics.Window2D;
 import graphics.Window3D;
 import graphics.loading.FontContainer;
+import gui.GUIController;
+import gui.InputManager;
 import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
@@ -79,6 +81,7 @@ public abstract class Core {
             Window3D.initialize(screenWidth, screenHeight, title);
         }
         FontContainer.init();
+        GUIController.init();
     }
 
     /**

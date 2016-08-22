@@ -1,59 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gui;
 
+import engine.Core;
 import static engine.Core.is3D;
 import graphics.Window3D;
-import graphics.data.GLFont;
-import graphics.loading.FontContainer;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import util.Vec2;
 
-public class GUIController {
+/**
+ *
+ * @author Kosmic
+ */
+public abstract class GUIController {
 
-    private static final Map<String, GUI> guis = new HashMap();
-    public final static GLFont FONT = FontContainer.get("Console");
+    private final static List<GUI> GUIS = new ArrayList();
 
-    public static void add(GUI... gui) {
-        Arrays.asList(gui).forEach(g -> {
-            guis.put(g.getName(), g);
-        });
+    public static void init() {
+
+        Core.update.onEvent(() -> update());
+        Core.renderLayer(100).onEvent(() -> draw());
+        InputManager.init();
     }
 
-    public static void remove(GUI g) {
-        if (guis.containsValue(g)) {
-            guis.remove(g.getName());
-        }
-    }
+    public static void addGUIs(GUI... guis) {
 
-    public static void draw() {
-        
-        if (is3D) {
-            Window3D.guiProjection();
-        }
-        
-        guis.values().forEach(g -> {
-            if (g.isVisible()) {
-                g.draw();
-            }
-        });
-
-        if (is3D) {
-            Window3D.resetProjection();
-        }
-    }
-
-    public static GUI getGUI(String n) {
-
-        return guis.get(n);
+        GUIS.addAll(Arrays.asList(guis));
     }
 
     public static void update() {
-        guis.values().forEach(g -> {
-            g.update();
-        });
+
+        GUIS.forEach(GUI::update);
     }
 
-    public static Map<String, GUI> getGUIMap() {
-        return guis;
+    public static void draw() {
+
+        Window3D.guiProjection();
+        GUIS.forEach(GUI::draw);
+        
+        if (is3D) {
+
+            Window3D.resetProjection();
+        }
+    }
+    
+    public static GUI containsClick(Vec2 click){
+        
+        for(GUI g : GUIS){
+            
+            if(g.containsClick(click)){
+                
+                return g;
+            }
+        }
+        
+        return null;
+    }
+
+    public static void pushToTop(GUI gui) {
+
+        GUIS.remove(gui);
+        GUIS.add(gui);
     }
 }

@@ -1,70 +1,98 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package gui;
 
-import gui.types.GUIComponent;
+import gui.components.Component;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
+import util.Vec2;
 
+/**
+ *
+ * @author Kosmic
+ */
 public class GUI {
 
-    private boolean visible = false;
-    protected boolean grabbed;
-    private final String name;
-    protected final ArrayList<GUIComponent> components = new ArrayList();
-    
-    public GUI(String n){
-        
-        name = n;
-    }
-    
-    public GUI(String n, GUIComponent ... gip){
-        
-        name = n;
-        components.addAll(Arrays.asList(gip));
-    }
-    
-    public String getName(){
-        
-        return name;
+    private List<Panel> panels;
+    private boolean selectFirst;
+
+    public GUI(boolean selectFirst) {
+
+        panels = new ArrayList();
+        this.selectFirst = selectFirst;
     }
 
-    public boolean isVisible() {
-        return visible;
+    public boolean isSelectFirst() {
+
+        return selectFirst;
     }
 
-    public void setVisible(boolean b) {
-        visible = b;
+    public void setSelectFirst(boolean selectFirst) {
+
+        this.selectFirst = selectFirst;
     }
 
-    public GUI add(GUIComponent... comp) {
-        Arrays.asList(comp).forEach(c -> {
-            components.add(c);
-        });
+    public boolean containsClick(Vec2 click) {
+
+        for (Panel p : panels) {
+
+            if (p.containsClick(click)) {
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
+    public Component getClickedComponent(Vec2 click){
+        
+        for (int i = panels.size() - 1; i >= 0; i--) {
+            
+            Component c = panels.get(i).getClickedComponent(click);
+            
+            if(c != null){
+                
+                return c;
+            }
+        }
+        
+        return null;
+    }
+
+    public GUI addPanel(Panel p) {
+
+        panels.add(p);
+        p.setGUI(this);
         return this;
     }
 
-    public void remove(GUIComponent c) {
-        if (components.contains(c)) {
-            components.remove(c);
-        }
+    public GUI removePanel(Panel p) {
+
+        panels.remove(p);
+        p.setGUI(this);
+        return this;
     }
 
-    public ArrayList<GUIComponent> getComponents() {
-        return components;
+    public void pushToTop(Panel p) {
+
+        panels.remove(p);
+        panels.add(p);
     }
 
-    public void update(){
-        
-        components.forEach(c -> {
-            
-            c.update();
-        });
+    public void update() {
+
+        panels.forEach(Panel::update);
     }
 
-    public void draw(){
-        
-        components.forEach(c -> {
-            
-            c.draw();
+    public void draw() {
+
+        panels.forEach(p -> {
+
+            p.draw(Vec2.ZERO);
         });
     }
 }
