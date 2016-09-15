@@ -40,20 +40,9 @@ public abstract class Component<T> implements PanelAppend {
         return click.containedBy(vec, vec.add(dimension));
     }
 
-    @Override
-    public void update() {
+    public abstract void onKey(int key);
 
-    }
+    public abstract void onClick();
 
-    public void onKey(int key) {
-
-    }
-
-    public void onClick() {
-
-    }
-
-    public void onRelease() {
-
-    }
+    public abstract void onRelease();
 }

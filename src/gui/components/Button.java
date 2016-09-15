@@ -13,12 +13,12 @@ import util.Vec2;
  *
  * @author Kosmic
  */
-public class TButton extends Component<Boolean> {
+public class Button extends Component<Boolean> {
 
-    private Sprite texture;
-    private boolean toggle;
+    protected Sprite texture;
+    protected boolean toggle;
 
-    public TButton(Sprite tex, Vec2 pos, boolean tog) {
+    public Button(Sprite tex, Vec2 pos, boolean tog) {
 
         texture = tex;
         position = pos;
@@ -68,4 +68,10 @@ public class TButton extends Component<Boolean> {
         
         texture.draw(position.add(new Vec2(texture.getTexture().getImageWidth() / 2.0, texture.getTexture().getImageHeight() / 2.0)).add(rPos), 0);
     }
+
+    @Override
+    public void onKey(int key) {}
+
+    @Override
+    public void update() {}
 }
