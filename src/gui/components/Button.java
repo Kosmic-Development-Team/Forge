@@ -15,6 +15,10 @@ import util.Vec2;
  */
 public class Button extends Component<Boolean> {
 
+    public static final int UNPRESSED_MODE = 0;
+    public static final int PRESSED_MODE = 1;
+    public static final int HOVER_MODE = 2;
+
     protected Sprite unpressedTex;
     protected Sprite pressedTex;
     protected Sprite hoverTex;
@@ -57,6 +61,32 @@ public class Button extends Component<Boolean> {
     }
 
     public void setDrawMode(int drawMode) {
+
+        if(drawMode < 0 && drawMode > 2){
+            
+            throw new IllegalArgumentException();
+        }
+        
+        Sprite bs = null;
+
+        switch (drawMode) {
+
+            case 0:
+
+                bs = unpressedTex;
+                break;
+            case 1:
+
+                bs = pressedTex;
+                break;
+            case 2:
+
+                bs = hoverTex;
+                break;
+        }
+
+        dimension = new Vec2(bs.getTexture().getImageWidth() * bs.scale.x,
+                bs.getTexture().getImageHeight() * bs.scale.y);
         this.drawMode = drawMode;
     }
 
@@ -94,7 +124,7 @@ public class Button extends Component<Boolean> {
     public void draw(Vec2 rPos) {
 
         switch (drawMode) {
-            
+
             case 0:
 
                 pressedTex.draw(position.add(new Vec2(pressedTex.getTexture().getImageWidth() / 2.0,
