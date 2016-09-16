@@ -43,15 +43,23 @@ public abstract class Component<T> implements PanelAppend {
         return click.containedBy(vec, vec.add(dimension));
     }
 
+    public void setPosition(Vec2 position) {
+        
+        this.position = position;
+    }
+
     public Vec2 getPosition() {
+        
         return position;
     }
 
     public Vec2 getDimension() {
+        
         return dimension;
     }
 
     public Signal<T> getStream() {
+        
         return stream;
     }
 
