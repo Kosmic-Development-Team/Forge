@@ -5,6 +5,8 @@
  */
 package gui.components;
 
+import engine.Core;
+import engine.Input;
 import engine.Signal;
 import gui.Panel;
 import util.Vec2;
@@ -19,6 +21,7 @@ public abstract class Component<T> implements PanelAppend {
 
     protected Vec2 position, dimension;
     protected Signal<T> stream;
+    private final Signal<Boolean> hovering = new Signal(false);
     protected Panel parent;
 
     @Override
@@ -40,20 +43,33 @@ public abstract class Component<T> implements PanelAppend {
         return click.containedBy(vec, vec.add(dimension));
     }
 
+    public Vec2 getPosition() {
+        return position;
+    }
+
+    public Vec2 getDimension() {
+        return dimension;
+    }
+
+    public Signal<T> getStream() {
+        return stream;
+    }
+
+    public Signal<Boolean> getHovering() {
+
+        return hovering;
+    }
+
     @Override
     public void update() {
 
+        Vec2 shifted = Input.getMouse().add(new Vec2(Core.screenWidth / 2.0, Core.screenHeight / 2.0));
+        hovering.set(containsClick(shifted));
     }
 
-    public void onKey(int key) {
+    public abstract void onKey(int key);
 
-    }
+    public abstract void onClick();
 
-    public void onClick() {
-
-    }
-
-    public void onRelease() {
-
-    }
+    public abstract void onRelease();
 }
