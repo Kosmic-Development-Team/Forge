@@ -97,7 +97,7 @@ public class Label extends Component {
         return this;
     }
 
-    public String getText(String t) {
+    public String getText() {
 
         return text;
     }
