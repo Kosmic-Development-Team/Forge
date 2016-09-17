@@ -6,6 +6,7 @@
 package gui.components;
 
 import graphics.Graphics2D;
+import gui.GUIController;
 import gui.GUIFont;
 import util.Color4;
 import util.Vec2;
@@ -49,6 +50,7 @@ public class TextField extends Component<Integer> {
     @Override
     public void onClick() {
 
+        GUIController.setSuppressed(true);
         //cursor placer
     }
 
