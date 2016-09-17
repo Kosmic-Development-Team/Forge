@@ -5,13 +5,7 @@
  */
 package gui.components;
 
-import graphics.Graphics2D;
-import graphics.data.Texture;
 import gui.GUIFont;
-import static org.lwjgl.opengl.GL11.GL_NEAREST;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
-import static org.lwjgl.opengl.GL11.glTexParameteri;
 import util.Color4;
 import util.Vec2;
 
@@ -21,28 +15,31 @@ import util.Vec2;
  */
 public class Label extends Component {
 
-    String text;
-    GUIFont font;
-    int size;
-    int format;
+    private String text;
+    private GUIFont font;
+    private double size;
+    public int format;
+    
+    private Color4 color;
     
     public static final int ALIGN_CENTER = 0;
     public static final int ALIGN_LEFT = 1;
     public static final int ALIGN_RIGHT = 2;
 
-    public Label(Vec2 pos, int size, GUIFont font, String t, int format) {
+    public Label(Vec2 pos, int size, GUIFont font, String t, int format, Color4 color) {
 
         position = pos;
         this.size = size;
         this.font = font;
         this.format = format;
+        this.color = color;
         text = t;
         dimension = new Vec2(t.length() * font.getTextures().get(0).getImageWidth(), font.getTextures().get(0).getImageHeight());
     }
 
-    public Label(Vec2 pos, int size, GUIFont font, int format) {
+    public Label(Vec2 pos, int size, GUIFont font, int format, Color4 color) {
 
-        this(pos, size, font, "", format);
+        this(pos, size, font, "", format, color);
     }
 
     @Override
@@ -68,26 +65,27 @@ public class Label extends Component {
     @Override
     public void draw(Vec2 pos) {
         
-        for (int i = 0; i < text.length(); i++) {
+        Vec2 aPos = Vec2.ZERO;
+        
+        switch(format) {
             
-            Texture s = font.getTextures().get(text.charAt(i));
-            int height = s.getImageHeight() * size;
-            int width = s.getImageWidth() * size;
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            
-            switch(format){
+            case ALIGN_CENTER:
                 
-                case ALIGN_CENTER:
-                    Graphics2D.drawSprite(s, pos.add(position).add(new Vec2(width * i + width / 2 - width * text.length()/2,height / 2)), new Vec2(size), 0, Color4.BLACK);
-                    break;
-                case ALIGN_LEFT:
-                    Graphics2D.drawSprite(s, pos.add(position).add(new Vec2(width * i + width / 2,height)), new Vec2(size), 0, Color4.BLACK);
-                    break;
-                case ALIGN_RIGHT:
-                    Graphics2D.drawSprite(s, pos.add(position).add(new Vec2(width * i + width / 2 - width * text.length(),height / 2)), new Vec2(size), 0, Color4.BLACK);
-                    break;
-            }
+                aPos = pos.add(position).subtract(new Vec2(text.length() / 2.0 * size * font.getTextures().get(0).getImageWidth(),0));
+                break;
+                
+            case ALIGN_LEFT:
+                
+                aPos = pos.add(position);
+                break;
+                
+            case ALIGN_RIGHT:
+                
+                aPos = pos.add(position).subtract(new Vec2(text.length() * size * font.getTextures().get(0).getImageWidth(),0));
+                break;
         }
+        
+        GUIFont.drawString(text, font, aPos, size, color);
     }
 
     public Label setText(String t) {
@@ -101,4 +99,33 @@ public class Label extends Component {
 
         return text;
     }
+    
+    public GUIFont getFont() {
+        
+        return font;
+    }
+    
+    public Label setSize(double s) {
+        
+        size = s;
+        dimension = new Vec2(text.length() * font.getTextures().get(0).getImageWidth(), font.getTextures().get(0).getImageHeight());
+        return this;
+    }
+    
+    public double getSize() {
+        
+        return size;
+    }
+    
+    public Label setColor(Color4 c) {
+        
+        color = c;
+        return this;
+    }
+    
+    public Color4 getColor() {
+        
+        return color;
+    }
+    
 }
