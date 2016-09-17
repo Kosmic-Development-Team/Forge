@@ -16,7 +16,7 @@ import java.util.Map;
 public class GUIFontController {
     
     private static Map<String, GUIFont> fonts = new HashMap();
-    
+
     public static GUIFont getFont(String name) {
         
         return fonts.get(name);

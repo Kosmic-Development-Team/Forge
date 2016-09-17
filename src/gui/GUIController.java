@@ -23,7 +23,18 @@ import util.Vec2;
  */
 public abstract class GUIController {
 
+    private static boolean suppressKeys = false;
     private final static List<GUI> GUIS = new ArrayList();
+
+    public static void setSuppressed(boolean sprst) {
+
+        suppressKeys = sprst;
+    }
+
+    public static boolean isSuppressed() {
+
+        return suppressKeys;
+    }
 
     public static void init() {
 
@@ -48,23 +59,23 @@ public abstract class GUIController {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
         GUIS.forEach(GUI::draw);
-        
+
         if (is3D) {
 
             Window3D.resetProjection();
         }
     }
-    
-    public static GUI containsClick(Vec2 click){
-        
-        for(GUI g : GUIS){
-            
-            if(g.containsClick(click)){
-                
+
+    public static GUI containsClick(Vec2 click) {
+
+        for (GUI g : GUIS) {
+
+            if (g.containsClick(click)) {
+
                 return g;
             }
         }
-        
+
         return null;
     }
 
