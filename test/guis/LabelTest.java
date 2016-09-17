@@ -36,7 +36,7 @@ public class LabelTest {
             System.out.println("Missing file.");
         }
         
-        TextField label = new TextField(new Vec2(250), new Vec2(200, 25), 2, GUIFontController.getFont("simple"), Label.ALIGN_CENTER, Color4.BLACK, Color4.WHITE, Color4.ORANGE);
+        Label label = new Label(new Vec2(250), 10, GUIFontController.getFont("simple"), "Hello, world!", Label.ALIGN_LEFT, Color4.MAGENTA);
         
         panel1.add(label);
         theGUI.addPanel(panel1);
