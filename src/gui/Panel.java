@@ -95,6 +95,7 @@ public class Panel implements PanelAppend {
     @Override
     public boolean containsClick(Vec2 click){
         
+        GUIController.setSuppressed(false);
         Vec2 vec = getAbsolutePos();
         return click.containedBy(vec, vec.add(dimension));
     }

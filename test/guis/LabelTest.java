@@ -12,6 +12,7 @@ import gui.GUIFont;
 import gui.GUIFontController;
 import gui.Panel;
 import gui.components.Label;
+import gui.components.TextField;
 import java.io.IOException;
 import util.Color4;
 import util.Vec2;
