@@ -35,7 +35,7 @@ public class LabelTest {
             System.out.println("Missing file.");
         }
         
-        Label label = new Label(new Vec2(250), 12, GUIFontController.getFont("simple"), "Hello, world!", Label.ALIGN_CENTER);
+        Label label = new Label(new Vec2(250), 7, GUIFontController.getFont("simple"), "Hello, world!", Label.ALIGN_CENTER);
         
         panel1.add(label);
         theGUI.addPanel(panel1);

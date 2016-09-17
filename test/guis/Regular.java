@@ -7,10 +7,15 @@ package guis;
 
 import engine.Core;
 import graphics.data.Sprite;
+import graphics.data.Texture;
 import gui.GUI;
 import gui.GUIController;
 import gui.Panel;
 import gui.components.Button;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
 import util.Color4;
 import util.Vec2;
 
@@ -27,10 +32,10 @@ public class Regular {
         GUI gant = new GUI(true);
         Panel grant = new Panel(new Vec2(100, 50), new Vec2(1000), Color4.BLACK, Color4.gray(0.5));
         gant.addPanel(grant);
-        Sprite s0 = new Sprite("footstep");
-        Sprite s1 = new Sprite("footstep_white");
-        Sprite s2 = new Sprite("yucky");
-        Button tb = new Button(s0, s1, s2, new Vec2(50), false);
+        Texture s0 = new Sprite("footstep").getTexture();
+        Texture s1 = new Sprite("footstep_white").getTexture();
+        Texture s2 = new Sprite("yucky").getTexture();
+        Button tb = new Button(s0, s1, s2, new Vec2(50), new Vec2(200), false);
 
         tb.getHovering().filter(p -> !p).onEvent((() -> {
 
