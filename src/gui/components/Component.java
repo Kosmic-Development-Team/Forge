@@ -43,9 +43,16 @@ public abstract class Component<T> implements PanelAppend {
         return click.containedBy(vec, vec.add(dimension));
     }
 
-    public void setPosition(Vec2 position) {
+    public Component setPosition(Vec2 position) {
         
         this.position = position;
+        return this;
+    }
+    
+    public Component setDimension(Vec2 dimension) {
+        
+        this.dimension = dimension;
+        return this;
     }
 
     public Vec2 getPosition() {
