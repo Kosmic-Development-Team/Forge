@@ -22,8 +22,8 @@ public class Panel implements PanelAppend {
     private Panel parent;
     private GUI gui;
 
-    private Vec2 position;
-    private Vec2 dimension;
+    protected Vec2 position;
+    protected Vec2 dimension;
 
     private Color4 borderCol;
     private Color4 fillCol;
@@ -44,7 +44,7 @@ public class Panel implements PanelAppend {
 
         if (parent != null) {
 
-            ap.add(parent.getAbsolutePos());
+            ap = ap.add(parent.getAbsolutePos());
         }
 
         return ap;
@@ -129,5 +129,16 @@ public class Panel implements PanelAppend {
 
             pa.draw(position.add(rPos));
         });
+    }
+    
+    public Vec2 getDimension(){
+        
+        return dimension;
+    }
+    
+    public PanelAppend setDimension(Vec2 dim){
+        
+        dimension = dim;
+        return this;
     }
 }

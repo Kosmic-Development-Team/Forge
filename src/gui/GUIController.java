@@ -11,6 +11,10 @@ import graphics.Window3D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import static org.lwjgl.opengl.GL11.GL_NEAREST;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_MAG_FILTER;
+import static org.lwjgl.opengl.GL11.glTexParameteri;
 import util.Vec2;
 
 /**
@@ -41,6 +45,8 @@ public abstract class GUIController {
     public static void draw() {
 
         Window3D.guiProjection();
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
         GUIS.forEach(GUI::draw);
         
         if (is3D) {
