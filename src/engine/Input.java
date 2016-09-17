@@ -12,8 +12,10 @@ import static util.Vec2.ZERO;
 
 public class Input {
 
-    public static final Map<Integer, Signal<Boolean>> mouseMap = new HashMap();
-    public static final Map<Integer, Signal<Boolean>> keyMap = new HashMap();
+    private static final Map<Integer, Signal<Boolean>> mouseMap = new HashMap();
+    private static final Map<Integer, Signal<Boolean>> keyMap = new HashMap();
+    private static final EventStream keyPresses = new Signal(null);
+    private static int currentKey = 0;
 
     public static final Signal<Integer> mouseWheel = new Signal<>(0);
 
@@ -25,6 +27,8 @@ public class Input {
         Core.update.onEvent(() -> {
             while (Keyboard.next()) {
                 int key = Keyboard.getEventKey();
+                keyPresses.sendEvent();
+                currentKey = key;
                 if (!keyMap.containsKey(key)) {
                     keyMap.put(key, new Signal<>(Keyboard.getEventKeyState()));
                 } else {
@@ -93,6 +97,16 @@ public class Input {
             mouseMap.put(button, new Signal<>(false));
         }
         return mouseMap.get(button);
+    }
+    
+    public static EventStream keyPressesSignal(){
+        
+        return keyPresses;
+    }
+    
+    public static int getCurrentKey(){
+        
+        return currentKey;
     }
 
     public static EventStream whenKey(int key, boolean val) {
