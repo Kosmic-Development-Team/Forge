@@ -24,6 +24,15 @@ public abstract class InputManager {
 
         Input.mouseSignal(0).filter(p -> !p).onEvent(() -> clicked(false));
         Input.mouseSignal(0).filter(p -> p).onEvent(() -> clicked(true));
+        Input.keyPressesSignal().onEvent(() -> keyPressed(Input.getCurrentKey()));
+    }
+    
+    private static void keyPressed(int key){
+        
+        if (selectedC != null) {
+            
+            selectedC.onKey(key);
+        }
     }
 
     private static void clicked(boolean pushed) {

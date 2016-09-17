@@ -15,7 +15,18 @@ import java.util.Map;
 
 public class GUIFontController {
     
+    private static boolean suppressKeys = false;
     private static Map<String, GUIFont> fonts = new HashMap();
+    
+    static void setSuppressed(boolean sprst){
+        
+        suppressKeys = sprst;
+    }
+    
+    public static boolean isSuppressed(){
+        
+        return suppressKeys;
+    }
     
     public static GUIFont getFont(String name) {
         

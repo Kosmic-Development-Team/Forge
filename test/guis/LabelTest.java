@@ -12,6 +12,7 @@ import gui.GUIFont;
 import gui.GUIFontController;
 import gui.Panel;
 import gui.components.Label;
+import gui.components.TextField;
 import java.io.IOException;
 import util.Color4;
 import util.Vec2;
@@ -35,7 +36,7 @@ public class LabelTest {
             System.out.println("Missing file.");
         }
         
-        Label label = new Label(new Vec2(250), 7, GUIFontController.getFont("simple"), "Hello, world!", Label.ALIGN_CENTER);
+        TextField label = new TextField(new Vec2(250), new Vec2(200, 25), 2, GUIFontController.getFont("simple"), Label.ALIGN_CENTER, Color4.BLACK, Color4.WHITE, Color4.ORANGE);
         
         panel1.add(label);
         theGUI.addPanel(panel1);
